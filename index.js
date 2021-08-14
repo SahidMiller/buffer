@@ -825,6 +825,10 @@ Buffer.prototype.lastIndexOf = function lastIndexOf (val, byteOffset, encoding) 
   return bidirectionalIndexOf(this, val, byteOffset, encoding, false)
 }
 
+Buffer.prototype.hexWrite = function (string, offset, length) {
+  return hexWrite(this, string, offset, length);
+};
+
 function hexWrite (buf, string, offset, length) {
   offset = Number(offset) || 0
   const remaining = buf.length - offset
@@ -851,17 +855,33 @@ function hexWrite (buf, string, offset, length) {
   return i
 }
 
+Buffer.prototype.utf8Write = function (string, offset, length) {
+  return utf8Write(this, string, offset, length);
+};
+
 function utf8Write (buf, string, offset, length) {
   return blitBuffer(utf8ToBytes(string, buf.length - offset), buf, offset, length)
 }
+
+Buffer.prototype.asciiWrite = function (string, offset, length) {
+  return asciiWrite(this, string, offset, length);
+};
 
 function asciiWrite (buf, string, offset, length) {
   return blitBuffer(asciiToBytes(string), buf, offset, length)
 }
 
+Buffer.prototype.base64Write = function (string, offset, length) {
+  return base64Write(this, string, offset, length);
+};
+
 function base64Write (buf, string, offset, length) {
   return blitBuffer(base64ToBytes(string), buf, offset, length)
 }
+
+Buffer.prototype.ucs2Write = function (string, offset, length) {
+  return ucs2Write(this, string, offset, length);
+};
 
 function ucs2Write (buf, string, offset, length) {
   return blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length)
@@ -943,6 +963,10 @@ Buffer.prototype.toJSON = function toJSON () {
   }
 }
 
+Buffer.prototype.base64Slice = function (start, end) {
+  return base64Slice(this, start, end);
+};
+
 function base64Slice (buf, start, end) {
   if (start === 0 && end === buf.length) {
     return base64.fromByteArray(buf)
@@ -950,6 +974,10 @@ function base64Slice (buf, start, end) {
     return base64.fromByteArray(buf.slice(start, end))
   }
 }
+
+Buffer.prototype.utf8Slice = function (start, end) {
+  return utf8Slice(this, start, end);
+};
 
 function utf8Slice (buf, start, end) {
   end = Math.min(buf.length, end)
@@ -1050,6 +1078,10 @@ function decodeCodePointsArray (codePoints) {
   return res
 }
 
+Buffer.prototype.asciiSlice = function (start, end) {
+  return asciiSlice(this, start, end);
+};
+
 function asciiSlice (buf, start, end) {
   let ret = ''
   end = Math.min(buf.length, end)
@@ -1060,6 +1092,10 @@ function asciiSlice (buf, start, end) {
   return ret
 }
 
+Buffer.prototype.latin1Slice = function (start, end) {
+  return latin1Slice(this, start, end);
+};
+
 function latin1Slice (buf, start, end) {
   let ret = ''
   end = Math.min(buf.length, end)
@@ -1069,6 +1105,10 @@ function latin1Slice (buf, start, end) {
   }
   return ret
 }
+
+Buffer.prototype.hexSlice = function (start, end) {
+  return hexSlice(this, start, end);
+};
 
 function hexSlice (buf, start, end) {
   const len = buf.length
@@ -1082,6 +1122,10 @@ function hexSlice (buf, start, end) {
   }
   return out
 }
+
+Buffer.prototype.utf16leSlice = function (start, end) {
+  return utf16leSlice(this, start, end);
+};
 
 function utf16leSlice (buf, start, end) {
   const bytes = buf.slice(start, end)
